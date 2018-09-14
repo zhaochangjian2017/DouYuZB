@@ -20,6 +20,8 @@
 		C672A4BD214A5EC40068C75F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C672A4BA214A5EC40068C75F /* MainViewController.swift */; };
 		C672A4BF214A607D0068C75F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C672A4BE214A607D0068C75F /* HomeViewController.swift */; };
 		C672A4C2214A7A180068C75F /* UIBarButtonItem-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C672A4C1214A7A180068C75F /* UIBarButtonItem-Extension.swift */; };
+		C672A4C4214B43AF0068C75F /* PageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C672A4C3214B43AF0068C75F /* PageTitleView.swift */; };
+		C672A4C6214B46B20068C75F /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C672A4C5214B46B20068C75F /* Common.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		C672A4BA214A5EC40068C75F /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C672A4BE214A607D0068C75F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C672A4C1214A7A180068C75F /* UIBarButtonItem-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem-Extension.swift"; sourceTree = "<group>"; };
+		C672A4C3214B43AF0068C75F /* PageTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTitleView.swift; sourceTree = "<group>"; };
+		C672A4C5214B46B20068C75F /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				C672A4C0214A79B30068C75F /* Extension */,
+				C672A4C5214B46B20068C75F /* Common.swift */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -171,6 +176,7 @@
 		C672A4B3214A5EC40068C75F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C672A4C3214B43AF0068C75F /* PageTitleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -303,7 +309,9 @@
 			files = (
 				C672A486214A38970068C75F /* AppDelegate.swift in Sources */,
 				C672A4BD214A5EC40068C75F /* MainViewController.swift in Sources */,
+				C672A4C4214B43AF0068C75F /* PageTitleView.swift in Sources */,
 				C672A4C2214A7A180068C75F /* UIBarButtonItem-Extension.swift in Sources */,
+				C672A4C6214B46B20068C75F /* Common.swift in Sources */,
 				C672A4BF214A607D0068C75F /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
