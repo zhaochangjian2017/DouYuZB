@@ -13,11 +13,14 @@ private let kTitleViewH : CGFloat = 40
 class HomeViewController: UIViewController {
 
     // MARK:- 懒加载属性
-    private lazy var pageTitleView : PageTitleView = {
+    private lazy var pageTitleView : PageTitleView = {[weak self] in
         let titleFrame = CGRect(x: 0, y: kStatusBarH + kNavigationBarH, width: kScreenW, height: kTitleViewH)
         let titles = ["推荐", "游戏", "娱乐", "趣玩"]
         let titleView = PageTitleView(frame: titleFrame, titles: titles)
         //titleView.backgroundColor = UIColor.purple
+        //指定代理（遵守PageTitleViewDelegate协议，后面还要实现对应的方法）
+        titleView.delegate = self
+        
         return titleView
     }()
     
@@ -92,4 +95,11 @@ extension HomeViewController {
         
     }
     
+}
+
+//MARK:- 遵守PageTitleViewDelegate协议
+extension HomeViewController : PageTitleViewDelegate {
+    func pageTitleView(titleViewL: PageTitleView, selectedIndex index: Int) {
+        pageContentView.setCurrentIndex(currentIndex: index)
+    }
 }

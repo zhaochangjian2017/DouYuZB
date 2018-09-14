@@ -11,11 +11,20 @@ import UIKit
 //
 private let kScrollLineH : CGFloat = 2
 
+//设置代理，实现title和滚动视图的联系
+protocol PageTitleViewDelegate : class {
+    func pageTitleView(titleViewL: PageTitleView, selectedIndex index: Int)
+}
 
+
+//
 class PageTitleView: UIView {
 
     //MARK:- 定义属性
+    private var currentIndex : Int = 0
     private var titles : [String]
+    //定义代理属性
+    weak var delegate: PageTitleViewDelegate? //指定该属性必须遵守该代理的协议 并且是弱引用的变量
     
     //MARK:- 懒加载属性
     private lazy var titleLabels : [UILabel] = [UILabel]()//用于存储label
@@ -97,6 +106,12 @@ extension PageTitleView {
             scrollView.addSubview(label)
             //将新创建的label缓存到label数组中
             titleLabels.append(label)
+            
+            //5 给label添加手势
+            label.isUserInteractionEnabled = true
+            let tapGes = UITapGestureRecognizer(target: self, action: #selector(self.titleLabelClick(tapGes:)))
+            label.addGestureRecognizer(tapGes)
+            
         }
     }
     
@@ -118,6 +133,35 @@ extension PageTitleView {
         //2.2 设置scrollline的属性
         scrollView.addSubview(scrollLine)
         scrollLine.frame = CGRect(x: firstLabel.frame.origin.x, y: frame.height - kScrollLineH, width: firstLabel.frame.width, height: kScrollLineH)
+        
+    }
+}
+
+//MARK:- 监听label的点击事件
+extension PageTitleView {
+    @objc private func titleLabelClick(tapGes: UITapGestureRecognizer) {
+        //1 获取当前label
+        guard let currentLabel = tapGes.view as? UILabel else { return } //as? UILabel的作用是将uiview转成uilabel
+        
+        //2 获取之前的label
+        let oldLabel = titleLabels[currentIndex]
+        
+        //3 切换文字的颜色
+        currentLabel.textColor = UIColor.orange
+        oldLabel.textColor = UIColor.darkGray
+        
+        //4 保存最新Label的下标值
+        currentIndex = currentLabel.tag
+        
+        //5 滚动条位置发生改变
+        let scrollLineX = CGFloat(currentLabel.tag) * scrollLine.frame.width
+        UIView.animate(withDuration: 0.15) {
+                self.scrollLine.frame.origin.x = scrollLineX
+            }
+        
+        //6 通知代理做事情
+        delegate?.pageTitleView(titleViewL: self, selectedIndex: currentIndex)
+        
         
     }
 }

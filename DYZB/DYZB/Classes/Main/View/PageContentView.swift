@@ -96,3 +96,15 @@ extension PageContentView : UICollectionViewDataSource {
     }
     
 }
+
+
+// MARK:- 对外暴露的方法
+extension PageContentView{
+    
+    //设置当前要滚动的位置
+    func setCurrentIndex(currentIndex :  Int) {
+        let offsetX = CGFloat(currentIndex) * collectionView.frame.width
+        collectionView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: false)
+    }
+    
+}
