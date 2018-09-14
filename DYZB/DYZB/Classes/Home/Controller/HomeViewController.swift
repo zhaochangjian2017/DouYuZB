@@ -40,7 +40,9 @@ class HomeViewController: UIViewController {
         
         //
         let contentView = PageContentView(frame: contentFrame, childVcs: childVcs, parentViewController: self)
-
+        //--代理使用步骤4：让HomePageViewController成为PageContentView的代理 (注意：成为代理就得遵守相应的协议)
+        contentView.delegate = self
+        
         return contentView
     }()
     
@@ -101,5 +103,13 @@ extension HomeViewController {
 extension HomeViewController : PageTitleViewDelegate {
     func pageTitleView(titleViewL: PageTitleView, selectedIndex index: Int) {
         pageContentView.setCurrentIndex(currentIndex: index)
+    }
+}
+
+
+//--代理使用步骤5：遵守PageContentViewDelegate协议，实现它的方法
+extension HomeViewController : PageContentViewDelegate {
+    func pageContentView(contentView: PageContentView, progress: CGFloat, sourceIndex: Int, targetIndex: Int) {
+        pageTitleView.setTitleWithProgress(progress: progress, sourceIndex: sourceIndex, targetIndex: targetIndex)
     }
 }

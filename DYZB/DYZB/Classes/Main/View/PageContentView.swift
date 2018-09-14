@@ -8,6 +8,12 @@
 
 import UIKit
 
+//定义代理协议（作用是在滚动视图的时候，让title和titleline联动）--代理使用步骤1:定义代理即方法
+protocol PageContentViewDelegate : class {
+    func pageContentView (contentView : PageContentView, progress : CGFloat, sourceIndex : Int, targetIndex : Int)
+}
+
+
 //
 private let ContentCellID = "ContentCellID"
 
@@ -16,6 +22,8 @@ class PageContentView: UIView {
     //MARK:- 定义属性
     private var childVcs: [UIViewController]
     private weak var parentViewController: UIViewController? //PageContentView是被HomeViewController引用的，而这里的PageContentView又引用了Home的UIViewController，造成循环引用，所以定义该变量要使用弱引用关键字weak .. ?, 后面在使用该变量的时候也要加？
+    private var startOffsetX : CGFloat = 0//拖拽偏移量
+    weak var delegate : PageContentViewDelegate? //--代理使用步骤2：定义代理属性
     
     //MARK:- 懒加载属性
     private lazy var collectionView: UICollectionView = {[weak self] in //注意：这里通过[weak self] in的方式来解决self.bounds.size循环引用的问题
@@ -35,6 +43,9 @@ class PageContentView: UIView {
         collectionView.dataSource = self
         //先注册创建cell的方法dequeueReusableCell()
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ContentCellID)
+        
+        //设置代理，用于监听collectionView的滚动
+        collectionView.delegate = self;
         
         return collectionView
     }()
@@ -98,6 +109,58 @@ extension PageContentView : UICollectionViewDataSource {
 }
 
 
+// MARK:- 遵守UICollectionViewDelegate
+extension PageContentView : UICollectionViewDelegate {
+    //拖拽的偏移量
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        startOffsetX = scrollView.contentOffset.x
+    }
+    
+    
+    //监测滚动
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //1 定义获取需要的数据
+        var progress : CGFloat = 0
+        var sourceIndex : Int = 0
+        var targetIndex : Int = 0
+        
+        //2 判断左滑还是右滑
+        let currentOffsetX = scrollView.contentOffset.x
+        let scrollViewW = scrollView.bounds.width
+        if(currentOffsetX > startOffsetX) {//左滑
+            //1) 计算progress
+            progress = currentOffsetX / scrollViewW - floor(currentOffsetX / scrollViewW)//得到左滑比例
+            //2)计算sourceIndex
+            sourceIndex = Int(currentOffsetX / scrollViewW)
+            //3）计算targetIndex
+            targetIndex = sourceIndex + 1
+            if(targetIndex >= childVcs.count) {
+                targetIndex = childVcs.count - 1
+            }
+            //4 如果完全滑过去了
+            if(currentOffsetX - startOffsetX == scrollViewW) {
+                progress = 1
+                targetIndex = sourceIndex
+            }
+        } else {//右滑
+            //1) 计算progress
+            progress = 1 - (currentOffsetX / scrollViewW - floor(currentOffsetX / scrollViewW)) //得到右滑比例
+            //2)计算targetIndex
+            targetIndex = Int(currentOffsetX / scrollViewW)
+            //3）计算sourceIndex
+            sourceIndex = targetIndex + 1
+            if(sourceIndex >= childVcs.count) {
+                sourceIndex = childVcs.count - 1
+            }
+        }
+        
+        //--代理使用步骤3：通知代理  （下一步就是让首页HomeViewController成为代理）
+        //3 获取需要的数据(滚动的进度progress、sourceIndex对应的label、targetIndex对应的label、判断左滑还是右滑-根据偏移量对比实现),将这三个值传递给titleView
+        delegate?.pageContentView(contentView: self, progress: progress, sourceIndex: sourceIndex, targetIndex: targetIndex)
+        //print("progress:\(progress) sourceIndex:\(sourceIndex) targetIndex:\(targetIndex)")
+    }
+}
+
 // MARK:- 对外暴露的方法
 extension PageContentView{
     
@@ -108,3 +171,6 @@ extension PageContentView{
     }
     
 }
+
+
+// MARK:-  //--代理使用步骤3
