@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
     }()
     
     // MARK:- 懒加载pageContentView
-    private lazy var pageContentView: PageContentView = {
+    private lazy var pageContentView: PageContentView = {[weak self] in
         //1 确定内容的frmae
        let contentH = kScreenH - kStatusBarH - kNavigationBarH - kTitleViewH
        let contentFrame = CGRect(x: 0, y: kStatusBarH + kNavigationBarH + kTitleViewH, width: kScreenW, height: contentH)
@@ -47,7 +47,6 @@ class HomeViewController: UIViewController {
 
         //1 设置UI
         setupUI()
-        
         
     }
 

@@ -15,13 +15,13 @@ class PageContentView: UIView {
 
     //MARK:- 定义属性
     private var childVcs: [UIViewController]
-    private var parentViewController: UIViewController
+    private weak var parentViewController: UIViewController? //PageContentView是被HomeViewController引用的，而这里的PageContentView又引用了Home的UIViewController，造成循环引用，所以定义该变量要使用弱引用关键字weak .. ?, 后面在使用该变量的时候也要加？
     
     //MARK:- 懒加载属性
-    private lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {[weak self] in //注意：这里通过[weak self] in的方式来解决self.bounds.size循环引用的问题
        //1 创建layout
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = self.bounds.size
+        layout.itemSize = (self?.bounds.size)!//强制解包
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .horizontal
@@ -41,7 +41,7 @@ class PageContentView: UIView {
     
     
     //MARK:- 自定义构造函数
-    init(frame: CGRect, childVcs: [UIViewController], parentViewController: UIViewController) {
+    init(frame: CGRect, childVcs: [UIViewController], parentViewController: UIViewController?) {
         self.childVcs = childVcs
         self.parentViewController = parentViewController
         
@@ -62,7 +62,7 @@ extension PageContentView {
     private func setupUI() {
         //1 将所有的子控制器添加到父控制器中
         for childVc in childVcs {
-            parentViewController.addChildViewController(childVc)
+            parentViewController?.addChildViewController(childVc)
         }
         
         //2 添加UICollectionView，用于在Cell中存放控制器的View
