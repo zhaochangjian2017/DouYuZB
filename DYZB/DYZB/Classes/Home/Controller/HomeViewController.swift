@@ -45,11 +45,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //1 设置导航栏
+        //1 设置UI
         setupUI()
         
-        //2 添加TitleView
-        view.addSubview(pageTitleView)
         
     }
 
@@ -73,7 +71,6 @@ extension HomeViewController {
         
         //3 添加contentView
         view.addSubview(pageContentView)
-        pageContentView.backgroundColor = UIColor.purple
         
     }
     
