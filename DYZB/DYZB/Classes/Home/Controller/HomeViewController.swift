@@ -19,7 +19,7 @@ class HomeViewController: UIViewController {
         let titleView = PageTitleView(frame: titleFrame, titles: titles)
         //titleView.backgroundColor = UIColor.purple
         //指定代理（遵守PageTitleViewDelegate协议，后面还要实现对应的方法）
-        titleView.delegate = self
+        titleView.delegate = self //(步骤4)
         
         return titleView
     }()
@@ -100,7 +100,7 @@ extension HomeViewController {
 }
 
 //MARK:- 遵守PageTitleViewDelegate协议
-extension HomeViewController : PageTitleViewDelegate {
+extension HomeViewController : PageTitleViewDelegate {//(步骤5)
     func pageTitleView(titleViewL: PageTitleView, selectedIndex index: Int) {
         pageContentView.setCurrentIndex(currentIndex: index)
     }

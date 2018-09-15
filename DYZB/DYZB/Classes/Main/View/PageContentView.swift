@@ -23,7 +23,10 @@ class PageContentView: UIView {
     private var childVcs: [UIViewController]
     private weak var parentViewController: UIViewController? //PageContentView是被HomeViewController引用的，而这里的PageContentView又引用了Home的UIViewController，造成循环引用，所以定义该变量要使用弱引用关键字weak .. ?, 后面在使用该变量的时候也要加？
     private var startOffsetX : CGFloat = 0//拖拽偏移量
+    private var isForbidScrollDelegate : Bool = false //禁用scroll代理标识(解决问题：当点击Title的时候，会调用scroll，而scroll又会触发title的代理，从而导致循环调用的问题)
     weak var delegate : PageContentViewDelegate? //--代理使用步骤2：定义代理属性
+    
+    
     
     //MARK:- 懒加载属性
     private lazy var collectionView: UICollectionView = {[weak self] in //注意：这里通过[weak self] in的方式来解决self.bounds.size循环引用的问题
@@ -113,12 +116,18 @@ extension PageContentView : UICollectionViewDataSource {
 extension PageContentView : UICollectionViewDelegate {
     //拖拽的偏移量
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        //一旦检测到scroll开始拖动了，就将scroll代理标识设置为否(区分出是点击title触发的scroll拖动事件，还是手指操作的scroll拖动事件)
+        isForbidScrollDelegate = false
+        
         startOffsetX = scrollView.contentOffset.x
     }
     
     
     //监测滚动
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //判断出是点击title触发的scroll拖动事件true，还是手指操作的scroll拖动事件false
+        if isForbidScrollDelegate { return } //如果是点击title触发的scroll事件，程序终止并退出
+        
         //1 定义获取需要的数据
         var progress : CGFloat = 0
         var sourceIndex : Int = 0
@@ -137,7 +146,7 @@ extension PageContentView : UICollectionViewDelegate {
             if(targetIndex >= childVcs.count) {
                 targetIndex = childVcs.count - 1
             }
-            //4 如果完全滑过去了
+            //4 如果源scrollView完全滑过去了
             if(currentOffsetX - startOffsetX == scrollViewW) {
                 progress = 1
                 targetIndex = sourceIndex
@@ -166,6 +175,10 @@ extension PageContentView{
     
     //设置当前要滚动的位置
     func setCurrentIndex(currentIndex :  Int) {
+        //1 记录需要执行代理的方法
+        isForbidScrollDelegate = true
+        
+        //2 滚动正确的位置
         let offsetX = CGFloat(currentIndex) * collectionView.frame.width
         collectionView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: false)
     }
