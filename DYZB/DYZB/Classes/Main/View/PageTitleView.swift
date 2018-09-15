@@ -166,7 +166,6 @@ extension PageTitleView {
         //6 通知代理做事情(步骤3)
         delegate?.pageTitleView(titleViewL: self, selectedIndex: currentIndex)
         
-        
     }
 }
 
