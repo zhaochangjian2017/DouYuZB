@@ -29,6 +29,8 @@
 		C672A4C6214B46B20068C75F /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C672A4C5214B46B20068C75F /* Common.swift */; };
 		C672A4C8214B5ADE0068C75F /* PageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C672A4C7214B5ADD0068C75F /* PageContentView.swift */; };
 		C672A4CA214B5E410068C75F /* UIColor-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C672A4C9214B5E410068C75F /* UIColor-Extension.swift */; };
+		C6A4A57C214F8C3F00523AB4 /* CollectionPrettyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A4A57A214F8C3F00523AB4 /* CollectionPrettyCell.swift */; };
+		C6A4A57D214F8C3F00523AB4 /* CollectionPrettyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6A4A57B214F8C3F00523AB4 /* CollectionPrettyCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,8 @@
 		C672A4C5214B46B20068C75F /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		C672A4C7214B5ADD0068C75F /* PageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageContentView.swift; sourceTree = "<group>"; };
 		C672A4C9214B5E410068C75F /* UIColor-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor-Extension.swift"; sourceTree = "<group>"; };
+		C6A4A57A214F8C3F00523AB4 /* CollectionPrettyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionPrettyCell.swift; sourceTree = "<group>"; };
+		C6A4A57B214F8C3F00523AB4 /* CollectionPrettyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionPrettyCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +201,8 @@
 				C672A4C7214B5ADD0068C75F /* PageContentView.swift */,
 				C62A749B214D0A1A00CAC34D /* CollectionNormalCell.swift */,
 				C62A749C214D0A1A00CAC34D /* CollectionNormalCell.xib */,
+				C6A4A57A214F8C3F00523AB4 /* CollectionPrettyCell.swift */,
+				C6A4A57B214F8C3F00523AB4 /* CollectionPrettyCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -310,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C672A490214A38970068C75F /* LaunchScreen.storyboard in Resources */,
+				C6A4A57D214F8C3F00523AB4 /* CollectionPrettyCell.xib in Resources */,
 				C62A749E214D0A1A00CAC34D /* CollectionNormalCell.xib in Resources */,
 				C672A4A4214A54580068C75F /* Home.storyboard in Resources */,
 				C672A4AD214A55950068C75F /* Profile.storyboard in Resources */,
@@ -339,6 +346,7 @@
 				C672A4C8214B5ADE0068C75F /* PageContentView.swift in Sources */,
 				C672A4C2214A7A180068C75F /* UIBarButtonItem-Extension.swift in Sources */,
 				C672A4C6214B46B20068C75F /* Common.swift in Sources */,
+				C6A4A57C214F8C3F00523AB4 /* CollectionPrettyCell.swift in Sources */,
 				C62A749D214D0A1A00CAC34D /* CollectionNormalCell.swift in Sources */,
 				C672A4BF214A607D0068C75F /* HomeViewController.swift in Sources */,
 			);
